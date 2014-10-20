@@ -2,7 +2,6 @@ package com.eva.me.mysquarescreenlock;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,8 +16,14 @@ public class ScreenLockActivity extends Activity {
 		isShown = true;
 		instance = ScreenLockActivity.this;
 		setContentView(R.layout.activity_screen_lock);
+		init();
 	}
 	
+	private void init() {
+		
+	}
+	
+
 	@Override
 	protected void onDestroy() {
 		isShown = false;

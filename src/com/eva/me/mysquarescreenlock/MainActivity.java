@@ -1,7 +1,5 @@
 package com.eva.me.mysquarescreenlock;
 
-import com.eva.me.mysquarescreenlock.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
