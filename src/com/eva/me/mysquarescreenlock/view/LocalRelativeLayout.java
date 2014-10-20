@@ -1,8 +1,10 @@
 package com.eva.me.mysquarescreenlock.view;
 
+import android.R;
 import android.app.Notification.Action;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -33,8 +35,12 @@ public class LocalRelativeLayout extends RelativeLayout{
 		initDragBitmap();		
 	}
 
+	//init the drag view
 	private void initDragBitmap() {	
-		//TODO: FINISH
+		if (dragView == null) {
+			dragView = BitmapFactory.decodeResource(mContext.getResources(),
+					com.eva.me.mysquarescreenlock.R.drawable.ic_lockscreen_handle_normal);
+		}
 	}
 
 	@Override
@@ -54,21 +60,36 @@ public class LocalRelativeLayout extends RelativeLayout{
 
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			
+			handleActionDown();
 			break;
 
 		case MotionEvent.ACTION_MOVE:
-			
+			handleActionMove();
 			break;
 		
 		case MotionEvent.ACTION_UP:
-			
+			handleActionUp();
 			break;
 			
 		default:
 			break;
 		}
 		return super.onTouchEvent(event);
+	}
+
+	private void handleActionUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void handleActionMove() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void handleActionDown() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void resetToInit() {
