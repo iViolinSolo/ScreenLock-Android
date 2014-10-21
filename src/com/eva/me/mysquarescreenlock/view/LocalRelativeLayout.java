@@ -6,9 +6,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,11 +22,19 @@ public class LocalRelativeLayout extends RelativeLayout{
 	private Context mContext = null;
 	private Bitmap dragView = null;//bitmap
 	private final int initDragViewPos = 3000;//start pos
-	private int dragViewX, dragViewY;//bitmap 
-	private ImageView oriDraView;//original drag view in center
+	private int dragViewX = initDragViewPos
+			, dragViewY = initDragViewPos;       //bitmap pos
+	private ImageView oriDraView = null;//original drag view in center
+	private int startPosX, startPosY;//center pos
+	private static final int DIRECTION_UP=1, 
+			DIRECTION_RIGHT=2, 
+			DIRECTION_DOWN=3, 
+			DIRECTION_LEFT=4, 
+			DIRECTION_CENTER=0;
+	
 	
 	//CONSTRUCTORS
-	public LocalRelativeLayout(Context context) {
+ 	public LocalRelativeLayout(Context context) {
 		super(context);
 		mContext = context;
 		initDragBitmap();		
@@ -76,9 +86,13 @@ public class LocalRelativeLayout extends RelativeLayout{
 
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			handleActionDown();
-			break;
-
+			Log.v(TAG, "onTouchEvent: ACTION_DOWN");
+			//initialize pos
+			dragViewX = (int) event.getX();
+			dragViewY = (int) event.getY();
+			
+			return handleActionDown(event);
+		
 		case MotionEvent.ACTION_MOVE:
 			handleActionMove();
 			break;
@@ -103,8 +117,20 @@ public class LocalRelativeLayout extends RelativeLayout{
 		
 	}
 
-	private void handleActionDown() {
+	private boolean handleActionDown(MotionEvent event) {
 		// TODO Auto-generated method stub
+		Rect rect = new Rect();
+		oriDraView.getHitRect(rect);
+		int x = (int) event.getX();
+		int y = (int) event.getY();
+		
+		boolean isInRect = rect.contains(x, y);
+		
+		if(isInRect) {
+			oriDraView.setVisibility(View.INVISIBLE);
+		}
+		
+		return isInRect;
 		
 	}
 
