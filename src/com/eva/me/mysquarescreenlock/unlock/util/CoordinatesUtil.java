@@ -7,6 +7,7 @@ import android.util.Log;
  * 
  */
 public class CoordinatesUtil {
+	private static final int RADIUS = 10;
 	private static final int DIRECTION_UP=1, 
 			DIRECTION_RIGHT=2, 
 			DIRECTION_DOWN=3, 
@@ -19,6 +20,7 @@ public class CoordinatesUtil {
 	public static int startPosY = -1;
 	
 	
+	
 //	//oriDrawView基本信息，长宽
 //	public static int width;
 //	public static int height;
@@ -27,13 +29,13 @@ public class CoordinatesUtil {
 	
 	public static int getDirection(int dragViewX, int dragViewY ) {
 		Log.e(TAG, "DragViewX: "+dragViewX+" DragViewY: "+dragViewY+" StartViewX: "+startPosX+" StartViewY: "+startPosY);
-		getMaxLen();
+		getMaxLen(dragViewX, dragViewY);
 		
 		return 0;
 	}
 
 
-private static void getMaxLen() {
+private static int getMaxLen(int dragViewX, int dragViewY) {
 	
 	
 }

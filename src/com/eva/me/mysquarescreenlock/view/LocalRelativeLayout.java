@@ -28,6 +28,7 @@ public class LocalRelativeLayout extends RelativeLayout{
 			, dragViewY = initDragViewPos;       //bitmap pos
 	private ImageView oriDraView = null;//original drag view in center
 //	private int startPosX, startPosY;//center pos
+	private int curDirection = 0;//初始化的方向就是最开始的方向
 	
 	
 	//CONSTRUCTORS
@@ -76,11 +77,44 @@ public class LocalRelativeLayout extends RelativeLayout{
 		initOnDraw(canvas);
 	}
 
+	//init switch logic
 	private void initOnDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
+
+		int left = 0, top = 0;
 		
-		int left = dragViewX;
-		int top = dragViewY;
+		//根据究竟是那个方向进行不同的绘制方法
+		switch (curDirection) {
+		case 0://就在中央位置，所以绘制的坐标就是手指的坐标
+			left = dragViewX;
+			top = dragViewY;
+			break;
+			
+		case 1://手指这个时候在向上滑动，所以横坐标固定
+			left = CoordinatesUtil.startPosX;
+			top = dragViewY;
+			break;
+			
+		case 2://手指向向右滑动，所以纵坐标不变
+			left = dragViewX;
+			top = CoordinatesUtil.startPosY;
+			break;
+			
+		case 3://手指向下滑动，所以横坐标不变
+			left = CoordinatesUtil.startPosX;
+			top = dragViewY;
+			break;
+			
+		case 4://手指向左滑动，所以这个时候纵坐标不变
+			left = dragViewX;
+			top = CoordinatesUtil.startPosY;
+			break;
+
+		default:
+			Log.wtf(TAG, "unknown exception in switch loop --> curDirection : "+curDirection);
+			break;
+		}
+		Log.e(TAG, "OnDraw : ==> left: "+left+" top: "+top);
 		canvas.drawBitmap(dragView, left, top, null);
 	}
 
