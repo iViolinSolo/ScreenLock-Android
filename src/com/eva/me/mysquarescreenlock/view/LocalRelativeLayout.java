@@ -1,5 +1,7 @@
 package com.eva.me.mysquarescreenlock.view;
 
+import com.eva.me.mysquarescreenlock.unlock.util.CoordinatesUtil;
+
 import android.R;
 import android.app.Notification.Action;
 import android.content.Context;
@@ -25,12 +27,7 @@ public class LocalRelativeLayout extends RelativeLayout{
 	private int dragViewX = initDragViewPos
 			, dragViewY = initDragViewPos;       //bitmap pos
 	private ImageView oriDraView = null;//original drag view in center
-	private int startPosX, startPosY;//center pos
-	private static final int DIRECTION_UP=1, 
-			DIRECTION_RIGHT=2, 
-			DIRECTION_DOWN=3, 
-			DIRECTION_LEFT=4, 
-			DIRECTION_CENTER=0;
+//	private int startPosX, startPosY;//center pos
 	
 	
 	//CONSTRUCTORS
@@ -66,6 +63,9 @@ public class LocalRelativeLayout extends RelativeLayout{
 		super.onFinishInflate();
 		Log.d(TAG, "onFinishInflate: ");
 		oriDraView = (ImageView) findViewById(com.eva.me.mysquarescreenlock.R.id.ivOriginDragView);//initialize
+		//init startPos
+		CoordinatesUtil.startPosX = oriDraView.getLeft();
+		CoordinatesUtil.startPosY = oriDraView.getTop();
 	}
 
 	//On Draw
@@ -79,6 +79,9 @@ public class LocalRelativeLayout extends RelativeLayout{
 	private void initOnDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
 		
+		int left = dragViewX;
+		int top = dragViewY;
+		canvas.drawBitmap(dragView, left, top, null);
 	}
 
 	@Override
@@ -94,8 +97,8 @@ public class LocalRelativeLayout extends RelativeLayout{
 			return handleActionDown(event);
 		
 		case MotionEvent.ACTION_MOVE:
-			handleActionMove();
-			break;
+			handleActionMove(event);
+			return true;
 		
 		case MotionEvent.ACTION_UP:
 			handleActionUp();
@@ -118,7 +121,6 @@ public class LocalRelativeLayout extends RelativeLayout{
 	}
 
 	private boolean handleActionDown(MotionEvent event) {
-		// TODO Auto-generated method stub
 		Rect rect = new Rect();
 		oriDraView.getHitRect(rect);
 		int x = (int) event.getX();
