@@ -7,11 +7,12 @@ import android.util.Log;
  * 
  */
 public class CoordinatesUtil {
-	private static final int RADIUS = 10;
+	public static final int RADIUS = 50;
 	private static final int DIRECTION_UP=1, 
 			DIRECTION_RIGHT=2, 
 			DIRECTION_DOWN=3, 
 			DIRECTION_LEFT=4, 
+			DIRECTION_DEFAULT=5,
 			DIRECTION_CENTER=0;
 	
 	private final static String TAG= "CoordinatesUtil";
@@ -27,10 +28,10 @@ public class CoordinatesUtil {
 	
 	public static int getDirection(int dragViewX, int dragViewY ) {
 		Log.e(TAG, "DragViewX: "+dragViewX+" DragViewY: "+dragViewY+" StartViewX: "+startPosX+" StartViewY: "+startPosY);
-//		int maxVal = getMaxLen(dragViewX, dragViewY);
+		
 		int xTmp = Math.abs(dragViewX-startPosX);
 		int yTmp = Math.abs(dragViewY-startPosY);
-		
+		Log.e(TAG, "xTmp: "+xTmp+" yTmp: "+yTmp);
 		if (xTmp<= RADIUS && yTmp<=RADIUS) {
 			//当这个时候的最大差没有超过半径的时候，不做任何动作，只是简单地跟随手的坐标（也就是指的是最后的ACTION_MOVE时候的），也就是说最后onDraw时候的绘画的横纵坐标就是手指的坐标
 			return DIRECTION_CENTER;

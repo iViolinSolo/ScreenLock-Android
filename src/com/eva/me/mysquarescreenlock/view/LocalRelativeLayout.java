@@ -3,6 +3,7 @@ package com.eva.me.mysquarescreenlock.view;
 import com.eva.me.mysquarescreenlock.unlock.util.CoordinatesUtil;
 
 import android.R;
+import android.R.integer;
 import android.app.Notification.Action;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,9 +28,9 @@ public class LocalRelativeLayout extends RelativeLayout{
 	private final int initDragViewPos = 3000;//start pos
 	private int dragViewX = initDragViewPos
 			, dragViewY = initDragViewPos;       //bitmap pos
-	private ImageView oriDraView = null;//original drag view in center
+	private ImageView oriDraView;//original drag view in center
 //	private int startPosX, startPosY;//center pos
-	private int curDirection = 0;//初始化的方向就是最开始的方向
+	private int curDirection = 5;//初始化的方向就是最开始的方向
 	
 	
 	//CONSTRUCTORS
@@ -54,7 +56,7 @@ public class LocalRelativeLayout extends RelativeLayout{
 	private void initDragBitmap() {	
 		if (dragView == null) {
 			dragView = BitmapFactory.decodeResource(mContext.getResources(),
-					com.eva.me.mysquarescreenlock.R.drawable.ic_lockscreen_handle_pressed);
+					com.eva.me.mysquarescreenlock.R.drawable.ring);
 		}
 	}
 
@@ -64,9 +66,6 @@ public class LocalRelativeLayout extends RelativeLayout{
 		super.onFinishInflate();
 		Log.d(TAG, "onFinishInflate: ");
 		oriDraView = (ImageView) findViewById(com.eva.me.mysquarescreenlock.R.id.ivOriginDragView);//initialize
-		//init startPos
-		CoordinatesUtil.startPosX = oriDraView.getLeft();
-		CoordinatesUtil.startPosY = oriDraView.getTop();
 	}
 
 	//On Draw
@@ -80,14 +79,19 @@ public class LocalRelativeLayout extends RelativeLayout{
 	//init switch logic
 	private void initOnDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
+		if (CoordinatesUtil.startPosX == -1 || CoordinatesUtil.startPosY == -1) {
+			CoordinatesUtil.startPosX = oriDraView.getLeft();
+			CoordinatesUtil.startPosY = oriDraView.getTop();
+			Log.d(TAG,"CoordinatesUtil.startPosX: "+ CoordinatesUtil.startPosX +"CoordinatesUtil.startPosY: " +CoordinatesUtil.startPosY );
+		}
 
 		int left = 0, top = 0;
 		
 		//根据究竟是那个方向进行不同的绘制方法
 		switch (curDirection) {
 		case 0://就在中央位置，所以绘制的坐标就是手指的坐标
-			left = dragViewX;
-			top = dragViewY;
+			left = dragViewX > CoordinatesUtil.RADIUS ? CoordinatesUtil.RADIUS : dragViewX;
+			top = dragViewY > CoordinatesUtil.RADIUS ? CoordinatesUtil.RADIUS : dragViewY;
 			break;
 			
 		case 1://手指这个时候在向上滑动，所以横坐标固定
@@ -109,7 +113,12 @@ public class LocalRelativeLayout extends RelativeLayout{
 			left = dragViewX;
 			top = CoordinatesUtil.startPosY;
 			break;
-
+			
+		case 5://但是此时是最初始的位置，就在中央位置，所以绘制的坐标就是手指的坐标,
+			left = dragViewX;
+			top = dragViewY;
+			break;
+			
 		default:
 			Log.wtf(TAG, "unknown exception in switch loop --> curDirection : "+curDirection);
 			break;
@@ -141,7 +150,7 @@ public class LocalRelativeLayout extends RelativeLayout{
 		
 		case MotionEvent.ACTION_UP:
 			handleActionUp();
-			break;
+			return true;
 			
 		default:
 			break;
@@ -151,12 +160,13 @@ public class LocalRelativeLayout extends RelativeLayout{
 
 	private void handleActionUp() {
 		// TODO Auto-generated method stub
-		
+		resetToInit();
 	}
 
 	//control action move event
 	private void handleActionMove(MotionEvent event) {
 		curDirection = CoordinatesUtil.getDirection(dragViewX, dragViewY);//get direction
+		Log.e(TAG, "handleActionMove: curDirection: "+curDirection);
 		invalidate();
 	}
 
@@ -173,12 +183,21 @@ public class LocalRelativeLayout extends RelativeLayout{
 			oriDraView.setVisibility(View.INVISIBLE);
 		}
 		
+		Log.e(TAG, "handleActionDown:  isInRect: "+isInRect);
 		return isInRect;
-		
 	}
 
+	//reset everything to defalut
 	private void resetToInit() {
+		//reset to default pos
+		dragViewX = initDragViewPos;
+		dragViewY = initDragViewPos;
 		
+		oriDraView.setVisibility(View.VISIBLE);
+		
+		curDirection = 5;//让此时的坐标恢复到最初始的情况下
+		
+		invalidate();
 	}
 
 	
