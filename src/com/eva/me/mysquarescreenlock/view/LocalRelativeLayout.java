@@ -131,6 +131,11 @@ public class LocalRelativeLayout extends RelativeLayout{
 			return handleActionDown(event);
 		
 		case MotionEvent.ACTION_MOVE:
+			Log.v(TAG, "onTouchEvent: ACTION_MOVE");
+			//update pos
+			dragViewX = (int) event.getX();
+			dragViewY = (int) event.getY();
+			
 			handleActionMove(event);
 			return true;
 		
@@ -149,11 +154,13 @@ public class LocalRelativeLayout extends RelativeLayout{
 		
 	}
 
-	private void handleActionMove() {
-		// TODO Auto-generated method stub
-		
+	//control action move event
+	private void handleActionMove(MotionEvent event) {
+		curDirection = CoordinatesUtil.getDirection(dragViewX, dragViewY);//get direction
+		invalidate();
 	}
 
+	//control action down event
 	private boolean handleActionDown(MotionEvent event) {
 		Rect rect = new Rect();
 		oriDraView.getHitRect(rect);
