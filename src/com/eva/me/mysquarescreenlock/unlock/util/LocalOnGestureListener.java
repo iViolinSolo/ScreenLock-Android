@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 public class LocalOnGestureListener extends SimpleOnGestureListener{
 	
 	private final int minFlingDistance = 50;
-	public static int DetectDirection = -1;
+	public static int detectDirection = -1;
 	
 	private static final int DIRECTION_UP=1, 
 			DIRECTION_RIGHT=2, 
@@ -53,6 +53,35 @@ public class LocalOnGestureListener extends SimpleOnGestureListener{
 					+"e2X: "+e2X +" e2Y: "+e2Y+"\n"
 					+"velocityX: "+velocityX+" velocityY: "+velocityY);
 		
+		
+		if (Math.abs(velocityX) < Math.abs(velocityY)) {
+			//根据向量判断获得方向的具体位置
+			//进入这个判断，只能存在的可能是UP和DOWN两个方向
+			if (velocityY < 0f) {
+				//方向向上
+				detectDirection = DIRECTION_UP;
+				
+			} else {
+				//方向向下
+				detectDirection = DIRECTION_DOWN;
+						
+			}
+		} else if (Math.abs(velocityX) > Math.abs(velocityY)) {
+			//进入这个判断，只能存在的可能是LEFT和RIGHT两个方向
+			if (velocityX < 0f) {
+				//方向向左
+				detectDirection = DIRECTION_LEFT;
+				
+			} else {
+				//方向向右
+				detectDirection = DIRECTION_RIGHT;
+				
+			}
+		} else {
+			//进入这个判断，只能存在的可能是四个方向，就是角分线和某些特殊情况，所以可以考虑再次归零，然后再进行手势判断
+			detectDirection = DIRECTION_CENTER;
+		}
+		Log.v(TAG, "detectDirection : "+detectDirection);
 		
 	}
 
