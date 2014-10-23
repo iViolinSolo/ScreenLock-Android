@@ -52,6 +52,8 @@ public class LocalOnGestureListener extends SimpleOnGestureListener{
 		Log.d(TAG, "e1X: "+e1X+" e1Y: "+e1Y+"\n"
 					+"e2X: "+e2X +" e2Y: "+e2Y+"\n"
 					+"velocityX: "+velocityX+" velocityY: "+velocityY);
+		
+		
 	}
 
 	@Override

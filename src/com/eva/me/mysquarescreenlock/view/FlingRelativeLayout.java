@@ -130,18 +130,19 @@ public class FlingRelativeLayout extends RelativeLayout{
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-
 		
-		
-//		switch (event.getAction()) {
-//		case MotionEvent.ACTION_DOWN:
-//			Log.v(TAG, "onTouchEvent: ACTION_DOWN");
-//			//initialize pos
-//			dragViewX = (int) event.getX();
-//			dragViewY = (int) event.getY();
-//			
-//			return handleActionDown(event);
-//		
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN://这里是为了监听起点，起点不正确就是不可能会触发最后的onFling事件
+			Log.v(TAG, "onTouchEvent: ACTION_DOWN");
+			//initialize pos
+			dragViewX = (int) event.getX();
+			dragViewY = (int) event.getY();
+			
+			if (handleActionDown(event)) {
+				return gestureDetector.onTouchEvent(event);
+			}else {
+				return false;
+			}
 //		case MotionEvent.ACTION_MOVE:
 //			Log.v(TAG, "onTouchEvent: ACTION_MOVE");
 //			//update pos
@@ -155,9 +156,9 @@ public class FlingRelativeLayout extends RelativeLayout{
 //			handleActionUp();
 //			return true;
 //			
-//		default:
-//			break;
-//		}
+		default:
+			break;
+		}
 //		return super.onTouchEvent(event);
 		Log.d(TAG, "FlingRelativeLayout: onTouch");
 		return gestureDetector.onTouchEvent(event);
