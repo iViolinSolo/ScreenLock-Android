@@ -7,43 +7,54 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.eva.me.mysquarescreenlock.unlock.util.CoordinatesUtil;
+import com.eva.me.mysquarescreenlock.unlock.util.LocalOnGestureListener;
 
-public class LocalRelativeLayout extends RelativeLayout{
+public class FlingRelativeLayout extends RelativeLayout{
 
-	private final String TAG = "LocalRelativeLayout";//TAG
+
+	private final String TAG = "FlingRelativeLayout";//TAG
 	
 	private Context mContext = null;
+	
 	private Bitmap dragView = null;//bitmap
 	private final int initDragViewPos = 3000;//start pos
 	private int dragViewX = initDragViewPos
 			, dragViewY = initDragViewPos;       //bitmap pos
+	
 	private ImageView oriDraView;//original drag view in center
-//	private int startPosX, startPosY;//center pos
-	private int curDirection = 5;//初始化的方向就是最开始的方向
+	private int startPosX = -1, startPosY = -1;//center pos
+	
+	private int curDirection = 0;//初始化的方向就是最开始的方向
+	
+	private GestureDetector gestureDetector = null;
 	
 	
 	//CONSTRUCTORS
- 	public LocalRelativeLayout(Context context) {
+ 	public FlingRelativeLayout(Context context) {
 		super(context);
 		mContext = context;
+		gestureDetector = new GestureDetector(mContext, new LocalOnGestureListener());
 		initDragBitmap();		
 	}
 
-	public LocalRelativeLayout(Context context, AttributeSet attrs) {
+	public FlingRelativeLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext = context;
+		gestureDetector = new GestureDetector(mContext, new LocalOnGestureListener());
 		initDragBitmap();		
 	}
 	
-	public LocalRelativeLayout(Context context, AttributeSet attrs, int defStyle) {
+	public FlingRelativeLayout(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		mContext = context;
+		gestureDetector = new GestureDetector(mContext, new LocalOnGestureListener());
 		initDragBitmap();		
 	}
 
@@ -74,10 +85,10 @@ public class LocalRelativeLayout extends RelativeLayout{
 	//init switch logic
 	private void initOnDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
-		if (CoordinatesUtil.startPosX == -1 || CoordinatesUtil.startPosY == -1) {
-			CoordinatesUtil.startPosX = oriDraView.getLeft();
-			CoordinatesUtil.startPosY = oriDraView.getTop();
-			Log.d(TAG,"CoordinatesUtil.startPosX: "+ CoordinatesUtil.startPosX +"CoordinatesUtil.startPosY: " +CoordinatesUtil.startPosY );
+		if (startPosX == -1 || startPosY == -1) {
+			startPosX = oriDraView.getLeft();
+			startPosY = oriDraView.getTop();
+			Log.d(TAG,"initOnDraw ====>   startPosX: "+ startPosX +"startPosY: " +startPosY );
 		}
 
 		int left = 0, top = 0;
@@ -85,33 +96,28 @@ public class LocalRelativeLayout extends RelativeLayout{
 		//根据究竟是那个方向进行不同的绘制方法
 		switch (curDirection) {
 		case 0://就在中央位置，所以绘制的坐标就是手指的坐标
-			left = dragViewX > CoordinatesUtil.RADIUS ? CoordinatesUtil.RADIUS : dragViewX;
-			top = dragViewY > CoordinatesUtil.RADIUS ? CoordinatesUtil.RADIUS : dragViewY;
+			left = dragViewX;
+			top = dragViewY;
 			break;
 			
 		case 1://手指这个时候在向上滑动，所以横坐标固定
-			left = CoordinatesUtil.startPosX;
+			left = startPosX;
 			top = dragViewY;
 			break;
 			
 		case 2://手指向向右滑动，所以纵坐标不变
 			left = dragViewX;
-			top = CoordinatesUtil.startPosY;
+			top = startPosY;
 			break;
 			
 		case 3://手指向下滑动，所以横坐标不变
-			left = CoordinatesUtil.startPosX;
+			left = startPosX;
 			top = dragViewY;
 			break;
 			
 		case 4://手指向左滑动，所以这个时候纵坐标不变
 			left = dragViewX;
-			top = CoordinatesUtil.startPosY;
-			break;
-			
-		case 5://但是此时是最初始的位置，就在中央位置，所以绘制的坐标就是手指的坐标,
-			left = dragViewX;
-			top = dragViewY;
+			top = startPosY;
 			break;
 			
 		default:
@@ -125,32 +131,36 @@ public class LocalRelativeLayout extends RelativeLayout{
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 
-		switch (event.getAction()) {
-		case MotionEvent.ACTION_DOWN:
-			Log.v(TAG, "onTouchEvent: ACTION_DOWN");
-			//initialize pos
-			dragViewX = (int) event.getX();
-			dragViewY = (int) event.getY();
-			
-			return handleActionDown(event);
 		
-		case MotionEvent.ACTION_MOVE:
-			Log.v(TAG, "onTouchEvent: ACTION_MOVE");
-			//update pos
-			dragViewX = (int) event.getX();
-			dragViewY = (int) event.getY();
-			
-			handleActionMove(event);
-			return true;
 		
-		case MotionEvent.ACTION_UP:
-			handleActionUp();
-			return true;
-			
-		default:
-			break;
-		}
-		return super.onTouchEvent(event);
+//		switch (event.getAction()) {
+//		case MotionEvent.ACTION_DOWN:
+//			Log.v(TAG, "onTouchEvent: ACTION_DOWN");
+//			//initialize pos
+//			dragViewX = (int) event.getX();
+//			dragViewY = (int) event.getY();
+//			
+//			return handleActionDown(event);
+//		
+//		case MotionEvent.ACTION_MOVE:
+//			Log.v(TAG, "onTouchEvent: ACTION_MOVE");
+//			//update pos
+//			dragViewX = (int) event.getX();
+//			dragViewY = (int) event.getY();
+//			
+//			handleActionMove(event);
+//			return true;
+//		
+//		case MotionEvent.ACTION_UP:
+//			handleActionUp();
+//			return true;
+//			
+//		default:
+//			break;
+//		}
+//		return super.onTouchEvent(event);
+		Log.d(TAG, "FlingRelativeLayout: onTouch");
+		return gestureDetector.onTouchEvent(event);
 	}
 
 	private void handleActionUp() {

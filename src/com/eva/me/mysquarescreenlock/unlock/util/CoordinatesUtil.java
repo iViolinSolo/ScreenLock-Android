@@ -4,7 +4,7 @@ import android.util.Log;
 
 /**
  * 实现功能，坐标管理
- * 
+ * @deprecated 暂时没有作用
  */
 public class CoordinatesUtil {
 	public static final int RADIUS = 50;

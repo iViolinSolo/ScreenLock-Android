@@ -1,12 +1,12 @@
 package com.eva.me.mysquarescreenlock.receiver;
 
-import com.eva.me.mysquarescreenlock.ScreenLockActivity;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import com.eva.me.mysquarescreenlock.ScreenLockActivity;
 
 public class LocalBroadcastReceiver extends BroadcastReceiver{
 	private static final String TAG = "LocalBroadcastReceiver";

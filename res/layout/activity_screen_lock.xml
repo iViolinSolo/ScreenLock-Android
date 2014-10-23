@@ -15,12 +15,12 @@
         android:layout_height="wrap_content"
         android:text="这里是锁屏界面" />
 
-    <com.eva.me.mysquarescreenlock.view.LocalRelativeLayout
+    <com.eva.me.mysquarescreenlock.view.FlingRelativeLayout
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/screenlock_main_bg" >
+        android:background="@drawable/bg_256" >
 
         <ImageView
             android:id="@+id/ivOriginDragView"
@@ -30,6 +30,6 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_lockscreen_handle_normal" />
 
-    </com.eva.me.mysquarescreenlock.view.LocalRelativeLayout>
+    </com.eva.me.mysquarescreenlock.view.FlingRelativeLayout>
 
 </RelativeLayout>
