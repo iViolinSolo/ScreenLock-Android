@@ -1,12 +1,14 @@
 package com.eva.me.mysquarescreenlock.unlock.util;
 
+import com.eva.me.mysquarescreenlock.view.FlingRelativeLayout;
+
+import android.os.Handler;
 import android.util.Log;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 
 public class LocalOnGestureListener extends SimpleOnGestureListener{
-	
-	private final int minFlingDistance = 50;
+ 	private final int minFlingDistance = 50;
 	public static int detectDirection = -1;
 	
 	private static final int DIRECTION_UP=1, 
@@ -17,6 +19,11 @@ public class LocalOnGestureListener extends SimpleOnGestureListener{
 	
 	private static final String TAG = "LocalOnGestureListener";
 	
+	private Handler mHandler = null;
+	
+	public void setHandler(Handler handler)	{
+		mHandler = handler;
+	}
 	
 	@Override
  	public boolean onDown(MotionEvent e) {
@@ -82,6 +89,14 @@ public class LocalOnGestureListener extends SimpleOnGestureListener{
 			detectDirection = DIRECTION_CENTER;
 		}
 		Log.v(TAG, "detectDirection : "+detectDirection);
+		
+		//manage with handler
+		if (mHandler != null) {
+			mHandler.obtainMessage(FlingRelativeLayout.GET_DIRECTION).sendToTarget();
+			Log.e(TAG, "handler message send success~");
+		}else {
+			Log.e(TAG, "Null Pointer Exception.... ===> mHandler is null");
+		}
 		
 	}
 

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -17,7 +18,7 @@ import com.eva.me.mysquarescreenlock.unlock.util.CoordinatesUtil;
 import com.eva.me.mysquarescreenlock.unlock.util.LocalOnGestureListener;
 
 public class FlingRelativeLayout extends RelativeLayout{
-
+	public static final int GET_DIRECTION = 10086;
 
 	private final String TAG = "FlingRelativeLayout";//TAG
 	
@@ -39,25 +40,29 @@ public class FlingRelativeLayout extends RelativeLayout{
 	//CONSTRUCTORS
  	public FlingRelativeLayout(Context context) {
 		super(context);
-		mContext = context;
-		gestureDetector = new GestureDetector(mContext, new LocalOnGestureListener());
-		initDragBitmap();		
+		initConstructor(context);
 	}
 
 	public FlingRelativeLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		mContext = context;
-		gestureDetector = new GestureDetector(mContext, new LocalOnGestureListener());
-		initDragBitmap();		
+		initConstructor(context);
 	}
 	
 	public FlingRelativeLayout(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		mContext = context;
-		gestureDetector = new GestureDetector(mContext, new LocalOnGestureListener());
-		initDragBitmap();		
+		initConstructor(context);
 	}
 
+	private void initConstructor(Context context) {
+		mContext = context;
+		LocalOnGestureListener localOnGestureListener = new LocalOnGestureListener(); 
+		gestureDetector = new GestureDetector(mContext, localOnGestureListener);
+		localOnGestureListener.setHandler(mHandler);
+		
+		initDragBitmap();	
+		
+	}
+	
 	//init the drag view
 	private void initDragBitmap() {	
 		if (dragView == null) {
@@ -164,11 +169,19 @@ public class FlingRelativeLayout extends RelativeLayout{
 		return gestureDetector.onTouchEvent(event);
 	}
 
+	/**
+	 * @deprecated
+	 * @param event
+	 */
 	private void handleActionUp() {
 		// TODO Auto-generated method stub
 		resetToInit();
 	}
 
+	/**
+	 * @deprecated
+	 * @param event
+	 */
 	//control action move event
 	private void handleActionMove(MotionEvent event) {
 		curDirection = CoordinatesUtil.getDirection(dragViewX, dragViewY);//get direction
@@ -201,10 +214,25 @@ public class FlingRelativeLayout extends RelativeLayout{
 		
 		oriDraView.setVisibility(View.VISIBLE);
 		
-		curDirection = 5;//让此时的坐标恢复到最初始的情况下
+		curDirection = 0;//让此时的坐标恢复到最初始的情况下
 		
 		invalidate();
 	}
 
+	private Handler mHandler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case FlingRelativeLayout.GET_DIRECTION:
+				Log.e(TAG, "mHandler -> handleMessage -> GET_DIRECTION : ");
+				curDirection = LocalOnGestureListener.detectDirection;
+				Log.e(TAG, "curDirection: "+curDirection);
+				invalidate();//每次收到这种事件的时候就会更新UI
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
 	
 }
