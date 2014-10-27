@@ -168,8 +168,8 @@ public class FlingRelativeLayout extends RelativeLayout{
 		if(isInRect) {
 			oriDraView.setVisibility(View.INVISIBLE);//===========================need to changed position, you should not invisible to early
 			//调整坐标
-			dragViewX = startPosX;
-			dragViewY = startPosY;
+			dragViewX = startPosX+oriDraView.getWidth()/2-dragView.getWidth()/2;
+			dragViewY = startPosY+oriDraView.getHeight()/2-dragView.getHeight()/2;
 		}
 		
 		Log.e(TAG, "handleActionDown:  isInRect: "+isInRect);
