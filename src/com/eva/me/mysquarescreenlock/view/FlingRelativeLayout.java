@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -31,6 +32,8 @@ public class FlingRelativeLayout extends RelativeLayout{
 	private final long delay = 50l;
 	private int dragViewX = initDragViewPos
 			, dragViewY = initDragViewPos;       //bitmap pos
+	private int bmAlpha = 255;//bitmap alpha
+	private final int deAlphaVal = 10;//MUST NOTICE distance and wholeDistance 
 	
 	private ImageView oriDraView;//original drag view in center
 	private int startPosX = -1, startPosY = -1;//center pos
@@ -94,12 +97,15 @@ public class FlingRelativeLayout extends RelativeLayout{
 	private void initOnDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
 		if (startPosX == -1 || startPosY == -1) {
-			startPosX = oriDraView.getLeft();
-			startPosY = oriDraView.getTop();
+			startPosX = oriDraView.getLeft() + oriDraView.getWidth()/2;//把坐标初始化到屏幕中央位置
+			startPosY = oriDraView.getTop() + oriDraView.getHeight()/2;
 			Log.d(TAG,"initOnDraw ====>   startPosX: "+ startPosX +"startPosY: " +startPosY );
 		}
 		
-		canvas.drawBitmap(dragView, dragViewX, dragViewY, null);
+		//add alpha
+		Paint paint = new Paint();
+		paint.setAlpha(bmAlpha);
+		canvas.drawBitmap(dragView, dragViewX, dragViewY, paint);
 	}
 
 	@Override
@@ -168,8 +174,8 @@ public class FlingRelativeLayout extends RelativeLayout{
 		if(isInRect) {
 			oriDraView.setVisibility(View.INVISIBLE);//===========================need to changed position, you should not invisible to early
 			//调整坐标
-			dragViewX = startPosX+oriDraView.getWidth()/2-dragView.getWidth()/2;
-			dragViewY = startPosY+oriDraView.getHeight()/2-dragView.getHeight()/2;
+			dragViewX = startPosX-dragView.getWidth()/2;
+			dragViewY = startPosY-dragView.getHeight()/2;
 		}
 		
 		Log.e(TAG, "handleActionDown:  isInRect: "+isInRect);
@@ -186,6 +192,9 @@ public class FlingRelativeLayout extends RelativeLayout{
 		
 		curDirection = 0;//让此时的坐标恢复到最初始的情况下
 		LocalOnGestureListener.detectDirection = 0;//==============================================================detect
+		
+		//resize bmAlpha
+		bmAlpha = 255;
 		
 		invalidate();
 	}
@@ -219,7 +228,9 @@ public class FlingRelativeLayout extends RelativeLayout{
 				
 			case 1:
 				dragViewY -= distance;
-				if ((startPosY-dragViewY) > wholeDistance ) {//移动了足够的距离
+				bmAlpha = bmAlpha>0 ? bmAlpha-deAlphaVal: 0;//alpha value----> need know
+				
+				if ((startPosY-(dragView.getHeight()/2+dragViewY)) > wholeDistance ) {//移动了足够的距离
 					resetToInit();
 					Log.v(TAG, "flingDragViewThread -> run() : "+"curDirection: "+curDirection+" ... resetToInit ... 移动了足够的距离");
 				} else {
@@ -231,7 +242,9 @@ public class FlingRelativeLayout extends RelativeLayout{
 				
 			case 2:
 				dragViewX += distance;
-				if ((dragViewX-startPosX) > wholeDistance) {//移动了足够的距离
+				bmAlpha = bmAlpha>0 ? bmAlpha-deAlphaVal: 0;//alpha value----> need know
+				
+				if ((dragViewX+dragView.getWidth()/2-startPosX) > wholeDistance) {//移动了足够的距离
 					resetToInit();
 					Log.v(TAG, "flingDragViewThread -> run() : "+"curDirection: "+curDirection+" ... resetToInit ... 移动了足够的距离");
 				} else {
@@ -243,7 +256,9 @@ public class FlingRelativeLayout extends RelativeLayout{
 				
 			case 3:
 				dragViewY += distance;
-				if ((dragViewY-startPosY) > wholeDistance ) {//移动了足够的距离
+				bmAlpha = bmAlpha>0 ? bmAlpha-deAlphaVal: 0;//alpha value----> need know
+				
+				if ((dragViewY+dragView.getHeight()/2-startPosY) > wholeDistance ) {//移动了足够的距离
 					resetToInit();
 					Log.v(TAG, "flingDragViewThread -> run() : "+"curDirection: "+curDirection+" ... resetToInit ... 移动了足够的距离");
 				} else {
@@ -255,7 +270,9 @@ public class FlingRelativeLayout extends RelativeLayout{
 				
 			case 4:
 				dragViewX -= distance;
-				if ((startPosX-dragViewX) > wholeDistance) {//移动了足够的距离
+				bmAlpha = bmAlpha>0 ? bmAlpha-deAlphaVal: 0;//alpha value----> need know
+				
+				if ((startPosX-(dragView.getHeight()/2+dragViewX)) > wholeDistance) {//移动了足够的距离
 					resetToInit();
 					Log.v(TAG, "flingDragViewThread -> run() : "+"curDirection: "+curDirection+" ... resetToInit ... 移动了足够的距离");
 				} else {
