@@ -29,7 +29,7 @@ public class FlingRelativeLayout extends RelativeLayout{
 	private final int initDragViewPos = 3000;//start pos
 	private final int wholeDistance = 200;
 	private final int distance = 10;
-	private final long delay = 50l;
+	private final long delay = 10l;
 	private int dragViewX = initDragViewPos
 			, dragViewY = initDragViewPos;       //bitmap pos
 	private int bmAlpha = 255;//bitmap alpha
@@ -216,7 +216,7 @@ public class FlingRelativeLayout extends RelativeLayout{
 		};
 	};
 	
-	private Runnable flingDragViewThread = new Runnable() {
+	private  Runnable flingDragViewThread = new Runnable() {
 		
 		@Override
 		public void run() {

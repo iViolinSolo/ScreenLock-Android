@@ -9,12 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.eva.me.mysquarescreenlock.ScreenLockActivity" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="这里是锁屏界面" />
-
     <com.eva.me.mysquarescreenlock.view.FlingRelativeLayout
         android:layout_width="300dp"
         android:layout_height="300dp"
@@ -31,5 +25,32 @@
             android:src="@drawable/ic_lockscreen_handle_normal" />
 
     </com.eva.me.mysquarescreenlock.view.FlingRelativeLayout>
+
+    <Button
+        android:id="@+id/comfirmBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="18dp"
+        android:text="确定" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="请输入您的解锁手势" />
+
+    <TextView
+        android:id="@+id/tvPsdReveal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="16dp"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
