@@ -26,6 +26,9 @@ public class FlingRelativeLayout extends RelativeLayout{
 	
 	private Bitmap dragView = null;//bitmap
 	private final int initDragViewPos = 3000;//start pos
+	private final int wholeDistance = 200;
+	private final int distance = 10;
+	private final long delay = 50l;
 	private int dragViewX = initDragViewPos
 			, dragViewY = initDragViewPos;       //bitmap pos
 	
@@ -95,42 +98,8 @@ public class FlingRelativeLayout extends RelativeLayout{
 			startPosY = oriDraView.getTop();
 			Log.d(TAG,"initOnDraw ====>   startPosX: "+ startPosX +"startPosY: " +startPosY );
 		}
-
-		int left = 0, top = 0;
 		
-		//根据究竟是那个方向进行不同的绘制方法
-		switch (curDirection) {
-		case 0://就在中央位置，所以绘制的坐标就是手指的坐标
-			left = dragViewX;
-			top = dragViewY;
-			break;
-			
-		case 1://手指这个时候在向上滑动，所以横坐标固定
-			left = startPosX;
-			top = dragViewY;
-			break;
-			
-		case 2://手指向向右滑动，所以纵坐标不变
-			left = dragViewX;
-			top = startPosY;
-			break;
-			
-		case 3://手指向下滑动，所以横坐标不变
-			left = startPosX;
-			top = dragViewY;
-			break;
-			
-		case 4://手指向左滑动，所以这个时候纵坐标不变
-			left = dragViewX;
-			top = startPosY;
-			break;
-			
-		default:
-			Log.wtf(TAG, "unknown exception in switch loop --> curDirection : "+curDirection);
-			break;
-		}
-		Log.e(TAG, "OnDraw : ==> left: "+left+" top: "+top);
-		canvas.drawBitmap(dragView, left, top, null);
+		canvas.drawBitmap(dragView, dragViewX, dragViewY, null);
 	}
 
 	@Override
@@ -139,13 +108,11 @@ public class FlingRelativeLayout extends RelativeLayout{
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN://这里是为了监听起点，起点不正确就是不可能会触发最后的onFling事件
 			Log.v(TAG, "onTouchEvent: ACTION_DOWN");
-			//initialize pos
-			dragViewX = (int) event.getX();
-			dragViewY = (int) event.getY();
 			
 			if (handleActionDown(event)) {
 				return gestureDetector.onTouchEvent(event);
 			}else {
+				resetToInit();//如果没能在这个圈里面
 				return false;
 			}
 //		case MotionEvent.ACTION_MOVE:
@@ -199,7 +166,10 @@ public class FlingRelativeLayout extends RelativeLayout{
 		boolean isInRect = rect.contains(x, y);
 		
 		if(isInRect) {
-			oriDraView.setVisibility(View.INVISIBLE);
+			oriDraView.setVisibility(View.INVISIBLE);//===========================need to changed position, you should not invisible to early
+			//调整坐标
+			dragViewX = startPosX;
+			dragViewY = startPosY;
 		}
 		
 		Log.e(TAG, "handleActionDown:  isInRect: "+isInRect);
@@ -215,6 +185,7 @@ public class FlingRelativeLayout extends RelativeLayout{
 		oriDraView.setVisibility(View.VISIBLE);
 		
 		curDirection = 0;//让此时的坐标恢复到最初始的情况下
+		LocalOnGestureListener.detectDirection = 0;//==============================================================detect
 		
 		invalidate();
 	}
@@ -226,6 +197,7 @@ public class FlingRelativeLayout extends RelativeLayout{
 				Log.e(TAG, "mHandler -> handleMessage -> GET_DIRECTION : ");
 				curDirection = LocalOnGestureListener.detectDirection;
 				Log.e(TAG, "curDirection: "+curDirection);
+				mHandler.postDelayed(flingDragViewThread, delay);
 				invalidate();//每次收到这种事件的时候就会更新UI
 				break;
 
@@ -233,6 +205,71 @@ public class FlingRelativeLayout extends RelativeLayout{
 				break;
 			}
 		};
+	};
+	
+	private Runnable flingDragViewThread = new Runnable() {
+		
+		@Override
+		public void run() {
+			switch (curDirection) {
+			case 0:
+				resetToInit();
+				Log.v(TAG, "flingDragViewThread -> run() : "+"curDirection: "+curDirection+" ... resetToInit");
+				break;
+				
+			case 1:
+				dragViewY -= distance;
+				if ((startPosY-dragViewY) > wholeDistance ) {//移动了足够的距离
+					resetToInit();
+					Log.v(TAG, "flingDragViewThread -> run() : "+"curDirection: "+curDirection+" ... resetToInit ... 移动了足够的距离");
+				} else {
+					mHandler.postDelayed(flingDragViewThread, delay);
+					invalidate();
+					Log.v(TAG, "flingDragViewThread -> run() : "+"curDirection: "+curDirection+" ... invalidate ... ");
+				}
+				break;
+				
+			case 2:
+				dragViewX += distance;
+				if ((dragViewX-startPosX) > wholeDistance) {//移动了足够的距离
+					resetToInit();
+					Log.v(TAG, "flingDragViewThread -> run() : "+"curDirection: "+curDirection+" ... resetToInit ... 移动了足够的距离");
+				} else {
+					mHandler.postDelayed(flingDragViewThread, delay);
+					invalidate();
+					Log.v(TAG, "flingDragViewThread -> run() : "+"curDirection: "+curDirection+" ... invalidate ... ");
+				}
+				break;
+				
+			case 3:
+				dragViewY += distance;
+				if ((dragViewY-startPosY) > wholeDistance ) {//移动了足够的距离
+					resetToInit();
+					Log.v(TAG, "flingDragViewThread -> run() : "+"curDirection: "+curDirection+" ... resetToInit ... 移动了足够的距离");
+				} else {
+					mHandler.postDelayed(flingDragViewThread, delay);
+					invalidate();
+					Log.v(TAG, "flingDragViewThread -> run() : "+"curDirection: "+curDirection+" ... invalidate ... ");
+				}
+				break;
+				
+			case 4:
+				dragViewX -= distance;
+				if ((startPosX-dragViewX) > wholeDistance) {//移动了足够的距离
+					resetToInit();
+					Log.v(TAG, "flingDragViewThread -> run() : "+"curDirection: "+curDirection+" ... resetToInit ... 移动了足够的距离");
+				} else {
+					mHandler.postDelayed(flingDragViewThread, delay);
+					invalidate();
+					Log.v(TAG, "flingDragViewThread -> run() : "+"curDirection: "+curDirection+" ... invalidate ... ");
+				}
+				break;
+
+			default:
+				break;
+			}
+//			mHandler.postDelayed(flingDragViewThread, delay);
+		}
 	};
 	
 }
