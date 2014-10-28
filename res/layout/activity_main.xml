@@ -17,6 +17,15 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="71dp"
         android:layout_marginTop="54dp"
-        android:text="Button" />
+        android:text="启动锁屏" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/button1"
+        android:layout_below="@+id/button1"
+        android:layout_marginTop="44dp"
+        android:text="设置密码" />
 
 </RelativeLayout>

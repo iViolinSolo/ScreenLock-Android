@@ -9,7 +9,7 @@
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-    
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -28,14 +28,19 @@
             android:name=".ScreenLockActivity"
             android:label="@string/title_activity_screen_lock" >
         </activity>
-        
-        <service 
-            android:name="com.eva.me.mysquarescreenlock.service.LocalService"
+
+        <service
+            android:name=".service.LocalService"
             android:enabled="true" >
-            <intent-filter >
-                <action android:name="com.eva.service.LocalService"/>
+            <intent-filter>
+                <action android:name="com.eva.service.LocalService" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name=".SetPsdActivity"
+            android:label="@string/title_activity_set_psw" >
+        </activity>
     </application>
 
 </manifest>
