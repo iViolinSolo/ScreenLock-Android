@@ -5,11 +5,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class ScreenLockActivity extends Activity {
 	private static final String TAG = "ScreenLockActivity";
 	public static boolean isShown = false;
 	private static Context instance = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,7 +24,6 @@ public class ScreenLockActivity extends Activity {
 	private void init() {
 		
 	}
-	
 
 	@Override
 	protected void onDestroy() {

@@ -205,6 +205,7 @@ public class FlingRelativeLayout extends RelativeLayout{
 			case FlingRelativeLayout.GET_DIRECTION:
 				Log.e(TAG, "mHandler -> handleMessage -> GET_DIRECTION : ");
 				curDirection = LocalOnGestureListener.detectDirection;
+				savePsd(curDirection);
 				Log.e(TAG, "curDirection: "+curDirection);
 				mHandler.postDelayed(flingDragViewThread, delay);
 				invalidate();//每次收到这种事件的时候就会更新UI
@@ -213,7 +214,39 @@ public class FlingRelativeLayout extends RelativeLayout{
 			default:
 				break;
 			}
-		};
+		}
+	};
+	
+	private void savePsd(int curDirection) {
+		switch (curDirection) {
+		case 0:
+			//CENTER
+			//TODO: Doing Nothing
+			break;
+			
+		case 1:
+			//CENTER
+			//TODO: Doing Nothing
+			break;
+			
+		case 2:
+			//CENTER
+			//TODO: Doing Nothing
+			break;
+			
+		case 3:
+			//CENTER
+			//TODO: Doing Nothing
+			break;
+			
+		case 4:
+			//CENTER
+			//TODO: Doing Nothing
+			break;
+
+		default:
+			break;
+		}
 	};
 	
 	private  Runnable flingDragViewThread = new Runnable() {

@@ -27,7 +27,7 @@
     </com.eva.me.mysquarescreenlock.view.FlingRelativeLayout>
 
     <Button
-        android:id="@+id/comfirmBtn"
+        android:id="@+id/btnConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

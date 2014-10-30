@@ -15,6 +15,7 @@ public class MainActivity extends Activity {
 	private static final String TAG = "MainActivity";
 	
 	private Button btnStaSer;
+	private Button btnStaPsdSetting;
 	
 	private void showToast(String str,Context context) {
 		Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
@@ -37,6 +38,17 @@ public class MainActivity extends Activity {
 				jmpLS.setAction("com.eva.service.LocalService");
 				MainActivity.this.startService(jmpLS);
 				showToast("开启锁屏~", MainActivity.this);
+			}
+		});
+		
+		btnStaPsdSetting = (Button) findViewById(R.id.button2);
+		btnStaPsdSetting.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent jmpPS = new Intent(MainActivity.this, SetPsdActivity.class);
+				startActivity(jmpPS);
+				showToast("这里进行手势密码设置", MainActivity.this);
 			}
 		});
 	}
