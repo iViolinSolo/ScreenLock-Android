@@ -9,58 +9,29 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.eva.me.mysquarescreenlock.SetPsdActivity" >
 
-    <com.eva.me.mysquarescreenlock.view.FlingRelativeLayout
-        android:id="@+id/flingRelativeLayout1"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/bg_256" >
-
-        <ImageView
-            android:id="@+id/ivOriginDragView"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_lockscreen_handle_normal" />
-    </com.eva.me.mysquarescreenlock.view.FlingRelativeLayout>
-
     <Button
-        android:id="@+id/btnClear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/flingRelativeLayout1"
-        android:layout_below="@+id/flingRelativeLayout1"
-        android:text="Clear" />
-
-    <Button
-        android:id="@+id/btnReset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnClear"
-        android:layout_alignBottom="@+id/btnClear"
-        android:layout_centerHorizontal="true"
-        android:text="Reset" />
-
-    <Button
-        android:id="@+id/btnConfirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnReset"
-        android:layout_alignBottom="@+id/btnReset"
-        android:layout_alignRight="@+id/flingRelativeLayout1"
-        android:text="Confirm" />
-
-    <TextView
-        android:id="@+id/tvPsdReveal"
+        android:id="@+id/btnModify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
-        android:text="您输入的手势密码是："
-        android:textColor="#ffffff"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_marginTop="38dp"
+        android:text="修改密码" />
 
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="删除密码" />
+
+    <Button
+        android:id="@+id/btnOpen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="开启密码" />
+    
 </RelativeLayout>

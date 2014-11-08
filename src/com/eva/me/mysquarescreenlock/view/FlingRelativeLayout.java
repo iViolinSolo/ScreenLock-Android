@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 
 import com.eva.me.mysquarescreenlock.unlock.util.CoordinatesUtil;
 import com.eva.me.mysquarescreenlock.unlock.util.LocalOnGestureListener;
+import com.eva.me.mysquarescreenlock.unlock.util.PasswordUtil;
 
 public class FlingRelativeLayout extends RelativeLayout{
 	public static final int GET_DIRECTION = 10086;
@@ -42,6 +43,10 @@ public class FlingRelativeLayout extends RelativeLayout{
 	
 	private GestureDetector gestureDetector = null;
 	
+	private OnFlingCompleteListener onFlingCompleteListener = null;
+	public void setOnFlingCompleteListener(OnFlingCompleteListener onFlingCompleteListener) {
+		this.onFlingCompleteListener = onFlingCompleteListener;
+	}
 	
 	//CONSTRUCTORS
  	public FlingRelativeLayout(Context context) {
@@ -206,6 +211,11 @@ public class FlingRelativeLayout extends RelativeLayout{
 				Log.e(TAG, "mHandler -> handleMessage -> GET_DIRECTION : ");
 				curDirection = LocalOnGestureListener.detectDirection;
 				savePsd(curDirection);
+				//添加上最后监听函数
+				if(onFlingCompleteListener != null) {
+					onFlingCompleteListener.onFlingComplete(curDirection);
+				}
+				
 				Log.e(TAG, "curDirection: "+curDirection);
 				mHandler.postDelayed(flingDragViewThread, delay);
 				invalidate();//每次收到这种事件的时候就会更新UI
@@ -217,6 +227,15 @@ public class FlingRelativeLayout extends RelativeLayout{
 		}
 	};
 	
+	/**
+	 * DIRECTION_UP=1, 
+	 * DIRECTION_RIGHT=2,
+	 * DIRECTION_DOWN=3,
+	 * DIRECTION_LEFT=4,
+	 * DIRECTION_CENTER=0;
+	 * 
+	 * @param curDirection
+	 */
 	private void savePsd(int curDirection) {
 		switch (curDirection) {
 		case 0:
@@ -225,28 +244,33 @@ public class FlingRelativeLayout extends RelativeLayout{
 			break;
 			
 		case 1:
-			//CENTER
-			//TODO: Doing Nothing
+			//UP
+			PasswordUtil.curPsd += " ↑";
+			Log.d(TAG, "PasswordUtil.curPsd = "+PasswordUtil.curPsd);
 			break;
 			
 		case 2:
-			//CENTER
-			//TODO: Doing Nothing
+			//RIGHT
+			PasswordUtil.curPsd += " →";
+			Log.d(TAG, "PasswordUtil.curPsd = "+PasswordUtil.curPsd);
 			break;
 			
 		case 3:
-			//CENTER
-			//TODO: Doing Nothing
+			//DOWN
+			PasswordUtil.curPsd += " ↓";
+			Log.d(TAG, "PasswordUtil.curPsd = "+PasswordUtil.curPsd);
 			break;
 			
 		case 4:
-			//CENTER
-			//TODO: Doing Nothing
+			//LEFT
+			PasswordUtil.curPsd += " ←";
+			Log.d(TAG, "PasswordUtil.curPsd = "+PasswordUtil.curPsd);
 			break;
 
 		default:
 			break;
 		}
+		
 	};
 	
 	private  Runnable flingDragViewThread = new Runnable() {

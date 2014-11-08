@@ -41,6 +41,10 @@
             android:name=".SetPsdActivity"
             android:label="@string/title_activity_set_psw" >
         </activity>
+        <activity
+            android:name=".PsdValidateActivity"
+            android:label="@string/title_activity_psd_validate" >
+        </activity>
     </application>
 
 </manifest>

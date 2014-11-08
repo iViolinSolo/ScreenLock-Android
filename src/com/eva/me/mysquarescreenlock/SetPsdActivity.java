@@ -2,8 +2,10 @@ package com.eva.me.mysquarescreenlock;
 
 import com.eva.me.mysquarescreenlock.unlock.util.PasswordUtil;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,7 +17,7 @@ import android.widget.Toast;
 public class SetPsdActivity extends Activity {
 
 	private Context context;
-	private Button btnConfirm, btnClear, btnReset;
+	private Button btnModify, btnDelete, btnOpen;
 	
 	private void showToast(String str) {
 		Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
@@ -29,48 +31,59 @@ public class SetPsdActivity extends Activity {
 	}
 
 	private void init() {
-		//init views
-		btnConfirm = (Button) findViewById(R.id.btnConfirm);
-		btnReset = (Button) findViewById(R.id.btnReset);
-		btnClear = (Button) findViewById(R.id.btnClear);
-		
-		//init context
 		context = SetPsdActivity.this;
+		//init buttons
+		btnOpen =(Button) findViewById(R.id.btnOpen);
+		btnDelete = (Button) findViewById(R.id.btnDelete);
+		btnModify = (Button) findViewById(R.id.btnModify);
 		
-		//
 		if (PasswordUtil.hasPsd(context)) {
 			//有密码
-			//那么先输入密码进行确认
 			handleHasPsd();
-		}else {
+		} else {
 			//没有密码
-			//新建密码，函数复用，在开始锁屏的时候没有检测到密码，也要新建密码
 			handleNoPsd();
 		}
+		
 	}
 
-	private void setBtnVisible(boolean btnConfirmVisibility, boolean btnResetVisibility, boolean btnClearVisibility) {
-		btnConfirm.setVisibility(btnConfirmVisibility? View.VISIBLE : View.INVISIBLE);
-		btnReset.setVisibility(btnResetVisibility? View.VISIBLE : View.INVISIBLE);
-		btnClear.setVisibility(btnClearVisibility? View.VISIBLE : View.INVISIBLE);
-	}
-	
 	private void handleNoPsd() {
-		showToast("没有密码，请先输入您的手势密码进行初始化！");
-		setBtnVisible(true, false, false);
+		//display or not display
+		btnModify.setVisibility(View.INVISIBLE);
+		btnDelete.setVisibility(View.INVISIBLE);
+		btnOpen.setVisibility(View.VISIBLE);
 		
 	}
 
 	private void handleHasPsd() {
-		showToast("请先输入密码确认您的身份！");
-		setBtnVisible(true, false, true);//显示确认按钮和清空按钮
-		btnConfirm.setOnClickListener(new OnClickListener() {
+		//display or not display
+		btnModify.setVisibility(View.VISIBLE);
+		btnDelete.setVisibility(View.VISIBLE);
+		btnOpen.setVisibility(View.INVISIBLE);
+		
+		//set button click listener
+		//不论按那个，全部都是进入验证界面，但是只不过传入的参数不同
+		btnModify.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onClick(View arg0) {
-				
+			public void onClick(View v) {
+				Intent jmpPVA  = new Intent();
+				jmpPVA.putExtra("order", "modify");
+				startActivity(jmpPVA);
 			}
 		});
+		
+		btnDelete.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent jmpPVA  = new Intent();
+				jmpPVA.putExtra("order", "delete");
+				startActivity(jmpPVA);
+			}
+		});
+		
+		
 	}
 
 	@Override

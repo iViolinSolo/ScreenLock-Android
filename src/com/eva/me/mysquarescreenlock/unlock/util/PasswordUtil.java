@@ -85,6 +85,13 @@ public class PasswordUtil {
 		}
 		return hasPsd;
 	}
-	
+	/**
+	 * 进行密码验证
+	 * @param context
+	 * @return
+	 */
+	public static boolean validatePsd(Context context) {
+		return curPsd.equals(getPsd(context)) ? true: false;
+	}
 	
 }
