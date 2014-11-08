@@ -41,6 +41,7 @@
         android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/textView1"
         android:layout_marginTop="16dp"
+        android:textColor="@android:color/holo_orange_light"
         android:text=""
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -57,9 +58,8 @@
         android:id="@+id/btnConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/flingRelativeLayout1"
-        android:layout_marginTop="20dp"
-        android:layout_toLeftOf="@+id/textView1"
+        android:layout_below="@+id/flingRelativeLayout"
+        android:layout_centerHorizontal="true"
         android:text="确定" />
 
 </RelativeLayout>

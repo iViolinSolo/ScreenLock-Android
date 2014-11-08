@@ -94,4 +94,12 @@ public class PasswordUtil {
 		return curPsd.equals(getPsd(context)) ? true: false;
 	}
 	
+	
+	public static void setDefaultPsd(Context context) {
+		if (!hasPsd) {
+			setPsd(" ↑ ↓ ← →", context);
+			Log.d(TAG, "当前密码是："+getPsd(context));
+		}
+	}
+	
 }

@@ -75,6 +75,7 @@ public class ScreenLockActivity extends Activity {
 						//密码输入正确
 						showToast("密码输入正确，欢迎回来~", instance);
 						PasswordUtil.curPsd="";//每次都是自动帮你去清空整个密码
+						finish();
 					} else {
 						//密码错误
 						//清空密码
@@ -89,6 +90,7 @@ public class ScreenLockActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					PasswordUtil.curPsd = "";
+					tvPsdReveal.setText("");
 					showToast("已清空输入的密码", instance);
 				}
 			});

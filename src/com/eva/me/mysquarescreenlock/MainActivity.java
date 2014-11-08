@@ -1,5 +1,7 @@
 package com.eva.me.mysquarescreenlock;
 
+import com.eva.me.mysquarescreenlock.unlock.util.PasswordUtil;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +18,7 @@ public class MainActivity extends Activity {
 	
 	private Button btnStaSer;
 	private Button btnStaPsdSetting;
+	private Context context;
 	
 	private void showToast(String str,Context context) {
 		Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
@@ -29,6 +32,8 @@ public class MainActivity extends Activity {
 	}
 
 	private void init() {
+		context = MainActivity.this;
+		
 		btnStaSer = (Button) findViewById(R.id.button1);
 		btnStaSer.setOnClickListener(new OnClickListener() {
 			
@@ -38,6 +43,7 @@ public class MainActivity extends Activity {
 				jmpLS.setAction("com.eva.service.LocalService");
 				MainActivity.this.startService(jmpLS);
 				showToast("开启锁屏~", MainActivity.this);
+				PasswordUtil.setDefaultPsd(context);
 			}
 		});
 		
