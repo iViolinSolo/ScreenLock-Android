@@ -68,6 +68,7 @@ public class SetPsdActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent jmpPVA  = new Intent();
+				jmpPVA.setClass(context, PsdValidateActivity.class);
 				jmpPVA.putExtra("order", "modify");
 				startActivity(jmpPVA);
 			}
@@ -78,6 +79,7 @@ public class SetPsdActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent jmpPVA  = new Intent();
+				jmpPVA.setClass(context, PsdValidateActivity.class);
 				jmpPVA.putExtra("order", "delete");
 				startActivity(jmpPVA);
 			}
