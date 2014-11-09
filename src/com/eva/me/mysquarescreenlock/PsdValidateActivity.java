@@ -69,6 +69,9 @@ public class PsdValidateActivity extends Activity {
 					switch (order) {
 					case "modify":
 						//跳转到一个新的界面
+						Intent iJmpPRA = new Intent(context, PsdResetActivity.class);
+						startActivity(iJmpPRA);
+						finish();
 						Log.e(TAG, "modify");
 						break;
 						
