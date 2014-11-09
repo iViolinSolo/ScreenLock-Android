@@ -53,6 +53,16 @@ public class SetPsdActivity extends Activity {
 		btnDelete.setVisibility(View.INVISIBLE);
 		btnOpen.setVisibility(View.VISIBLE);
 		
+		btnOpen.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent iJmpPRA = new Intent(context, PsdResetActivity.class);
+				startActivity(iJmpPRA);
+				finish();
+			}
+		});
+		
 	}
 
 	private void handleHasPsd() {
