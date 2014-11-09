@@ -71,6 +71,7 @@ public class SetPsdActivity extends Activity {
 				jmpPVA.setClass(context, PsdValidateActivity.class);
 				jmpPVA.putExtra("order", "modify");
 				startActivity(jmpPVA);
+				finish();
 			}
 		});
 		
@@ -82,6 +83,7 @@ public class SetPsdActivity extends Activity {
 				jmpPVA.setClass(context, PsdValidateActivity.class);
 				jmpPVA.putExtra("order", "delete");
 				startActivity(jmpPVA);
+				finish();
 			}
 		});
 		

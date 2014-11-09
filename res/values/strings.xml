@@ -7,5 +7,6 @@
     <string name="title_activity_screen_lock">ScreenLockActivity</string>
     <string name="title_activity_set_psw">SetPswActivity</string>
     <string name="title_activity_psd_validate">PsdValidateActivity</string>
+    <string name="title_activity_psd_reset">PsdResetActivity</string>
 
 </resources>

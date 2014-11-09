@@ -45,6 +45,10 @@
             android:name=".PsdValidateActivity"
             android:label="@string/title_activity_psd_validate" >
         </activity>
+        <activity
+            android:name=".PsdResetActivity"
+            android:label="@string/title_activity_psd_reset" >
+        </activity>
     </application>
 
 </manifest>
