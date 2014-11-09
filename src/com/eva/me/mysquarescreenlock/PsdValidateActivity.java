@@ -68,12 +68,14 @@ public class PsdValidateActivity extends Activity {
 					//下面处理密码正确逻辑
 					switch (order) {
 					case "modify":
-						//
+						//跳转到一个新的界面
 						Log.e(TAG, "modify");
 						break;
 						
 					case "delete":
-						//
+						//删除密码即可，记得要退出
+						PasswordUtil.clearPsd(context);
+						finish();
 						Log.e(TAG, "delete");
 						break;
 						

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.eva.me.mysquarescreenlock.view;
+package com.eva.me.mysquarescreenlock.listener;
 
 /**
  * @author EVA

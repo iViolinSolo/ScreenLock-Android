@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.eva.me.mysquarescreenlock.listener.OnFlingCompleteListener;
 import com.eva.me.mysquarescreenlock.unlock.util.CoordinatesUtil;
 import com.eva.me.mysquarescreenlock.unlock.util.LocalOnGestureListener;
 import com.eva.me.mysquarescreenlock.unlock.util.PasswordUtil;

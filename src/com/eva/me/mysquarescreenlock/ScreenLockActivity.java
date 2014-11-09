@@ -1,8 +1,8 @@
 package com.eva.me.mysquarescreenlock;
 
+import com.eva.me.mysquarescreenlock.listener.OnFlingCompleteListener;
 import com.eva.me.mysquarescreenlock.unlock.util.PasswordUtil;
 import com.eva.me.mysquarescreenlock.view.FlingRelativeLayout;
-import com.eva.me.mysquarescreenlock.view.OnFlingCompleteListener;
 
 import android.app.Activity;
 import android.content.Context;
@@ -75,11 +75,13 @@ public class ScreenLockActivity extends Activity {
 						//密码输入正确
 						showToast("密码输入正确，欢迎回来~", instance);
 						PasswordUtil.curPsd="";//每次都是自动帮你去清空整个密码
+						tvPsdReveal.setText("");
 						finish();
 					} else {
 						//密码错误
 						//清空密码
 						PasswordUtil.curPsd="";
+						tvPsdReveal.setText("");
 						showToast("密码输入错误，请重新输入", instance);
 					}
 				}
