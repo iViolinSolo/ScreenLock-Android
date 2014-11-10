@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
 				jmpLS.setAction("com.eva.service.LocalService");
 				MainActivity.this.startService(jmpLS);
 				showToast("开启锁屏~", MainActivity.this);
-				PasswordUtil.setDefaultPsd(context);
+//				PasswordUtil.setDefaultPsd(context);//这个是测试用，初始密码
 			}
 		});
 		
