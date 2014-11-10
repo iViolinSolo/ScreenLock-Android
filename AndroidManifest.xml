@@ -12,9 +12,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ico"
+        android:icon="@drawable/micon"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Holo.Light.Dialog.MinWidth" >
+        android:theme="@android:style/Theme.DeviceDefault.DialogWhenLarge.NoActionBar" >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >

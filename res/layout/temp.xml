@@ -4,89 +4,36 @@
     android:layout_height="match_parent"
     android:background="@drawable/main_bg"
     android:orientation="vertical"
+    android:gravity="center"
     android:padding="10dp" >
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="15dp" >
-    </FrameLayout>
+    <com.eva.me.mysquarescreenlock.view.FlingRelativeLayout
+        android:id="@+id/flingRelativeLayout"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_256" >
 
-    <TextView
-        android:id="@+id/textView1"
+        <ImageView
+            android:id="@+id/ivOriginDragView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_lockscreen_handle_normal" />
+    </com.eva.me.mysquarescreenlock.view.FlingRelativeLayout>
+
+    <Button
+        android:id="@+id/btnClear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="欢迎使用锁屏软件"
-        android:layout_gravity="center"
-        android:textColor="@android:color/white"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text="清空" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="15dp" >
-    </FrameLayout>
-    
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btnConfirm"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:padding="5dp" >
+        android:text="确认" />
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="@drawable/btnface1"
-      	  	android:textColor="@android:color/white"
-            android:text="启动锁屏功能" />
-
-        <FrameLayout
-            android:layout_width="10dp"
-            android:layout_height="match_parent" >
-        </FrameLayout>
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="@drawable/btnface6"
-      	  	android:textColor="@android:color/white"
-            android:text="设置手势密码" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:padding="5dp" >
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="@drawable/btnface5"
-            android:text="关于"
-            android:textColor="@android:color/white" />
-
-        <FrameLayout
-            android:layout_width="10dp"
-            android:layout_height="match_parent" >
-        </FrameLayout>
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="@drawable/btnface3"
-            android:text="离开"
-            android:textColor="@android:color/white" />
-
-    </LinearLayout>
     
 </LinearLayout>
