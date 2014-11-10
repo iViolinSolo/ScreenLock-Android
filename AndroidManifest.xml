@@ -12,9 +12,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/ico"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@android:style/Theme.Holo.Light.Dialog.MinWidth" >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -26,7 +26,8 @@
         </activity>
         <activity
             android:name=".ScreenLockActivity"
-            android:label="@string/title_activity_screen_lock" >
+            android:label="@string/title_activity_screen_lock"
+            android:theme="@android:style/Theme.DeviceDefault.NoActionBar" >
         </activity>
 
         <service
