@@ -18,6 +18,7 @@ public class MainActivity extends Activity {
 	
 	private Button btnStaSer;
 	private Button btnStaPsdSetting;
+	private Button btnAbout, btnLeave;
 	private Context context;
 	
 	private void showToast(String str,Context context) {
@@ -57,6 +58,27 @@ public class MainActivity extends Activity {
 				showToast("这里进行手势密码设置", MainActivity.this);
 			}
 		});
+		
+		btnAbout = (Button) findViewById(R.id.button3);
+		btnAbout.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				showToast("这里是软件介绍", context);
+			}
+		});
+		
+		btnLeave = (Button) findViewById(R.id.button4);
+		btnLeave.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				showToast("再见~", context);
+				finish();
+				PasswordUtil.curPsd="";//还是处理一下
+			}
+		});
+		
 	}
 
 	@Override
