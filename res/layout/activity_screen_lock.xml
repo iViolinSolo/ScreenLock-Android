@@ -38,28 +38,53 @@
         android:id="@+id/tvPsdReveal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tvTopInfo"
         android:textColor="@android:color/holo_orange_light"
         android:text=""
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <Button
-        android:id="@+id/btnClear"
-        android:layout_width="wrap_content"
+    <LinearLayout 
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnConfirm"
-        android:layout_alignBottom="@+id/btnConfirm"
-        android:layout_toRightOf="@+id/textView1"
-        android:text="清空" />
-
-    <Button
-        android:id="@+id/btnConfirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/flingRelativeLayout"
-        android:layout_centerHorizontal="true"
-        android:text="确定" />
+        android:orientation="horizontal"
+        android:layout_below="@id/flingRelativeLayout"
+        android:gravity="center"
+        android:padding="5dp" >
+        
+	    <FrameLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1" >
+	    </FrameLayout>
+        
+	    <Button
+	        android:id="@+id/btnClear"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/btnface5"
+	        android:text="清空" />
+	    
+	    <FrameLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="7" >
+	    </FrameLayout>
+	
+	    <Button
+	        android:id="@+id/btnConfirm"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/btnface6"
+	        android:text="确定" />
+	    
+	    <FrameLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1" >
+	    </FrameLayout>
+	    
+    </LinearLayout>
+    
 
 </RelativeLayout>
