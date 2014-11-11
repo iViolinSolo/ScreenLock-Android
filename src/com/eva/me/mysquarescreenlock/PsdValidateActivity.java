@@ -70,6 +70,7 @@ public class PsdValidateActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				PasswordUtil.curPsd = "";
+				tvPsdReveal.setText("");
 				showToast("输入手势清除成功", context);
 			}
 		});
@@ -84,6 +85,7 @@ public class PsdValidateActivity extends Activity {
 					//密码正确
 					showToast("验证成功~", context);
 					PasswordUtil.curPsd = "";//清空当前是输入的密码
+					tvPsdReveal.setText("");
 					//下面处理密码正确逻辑
 					switch (order) {
 					case "modify":
@@ -113,6 +115,7 @@ public class PsdValidateActivity extends Activity {
 					//密码错误
 					showToast("密码输入错误，请重新输入!", context);
 					PasswordUtil.curPsd = "";//清空当前是输入的密码
+					tvPsdReveal.setText("");
 				}
 				
 			}
