@@ -75,7 +75,7 @@
 	        android:id="@+id/btnConfirm"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:background="@drawable/btnface6"
+	        android:background="@drawable/btnface3"
 	        android:text="确定" />
 	    
 	    <FrameLayout
