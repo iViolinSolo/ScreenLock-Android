@@ -7,6 +7,7 @@ import com.eva.me.mysquarescreenlock.view.FlingRelativeLayout;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,9 @@ public class ScreenLockActivity extends Activity {
 	private static final String TAG = "ScreenLockActivity";
 	public static boolean isShown = false;
 	private static Context instance = null;
+	
+	private final int NEED_DELAY = 1;
+	private long delay = 100l;
 	
 	private Button btnConfirm, btnClear;
 	private TextView tvTopInfo, tvPsdReveal;
@@ -110,7 +114,8 @@ public class ScreenLockActivity extends Activity {
 					//一旦监听到有滑动手势的时候，最好判断一下，不为0，就可以finish()
 					if (curDirection != 0) {
 						PasswordUtil.curPsd="";//清空，因为如果不清空的话，每次滑动其实是把我们的滑动代码存储了起来
-						ScreenLockActivity.this.finish();
+						mHandler.obtainMessage(NEED_DELAY).sendToTarget();
+//						ScreenLockActivity.this.finish();//比起直接结束，效果更好
 					}
 				}
 			});
@@ -118,6 +123,29 @@ public class ScreenLockActivity extends Activity {
 		}
 		
 	}
+	
+	
+	private Handler mHandler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case NEED_DELAY:
+				mHandler.postDelayed(finishCurAct, delay);
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
+	
+	private Runnable finishCurAct = new Runnable() {
+		
+		@Override
+		public void run() {
+			ScreenLockActivity.this.finish();
+			showToast("解锁成功~", ScreenLockActivity.this);
+		}
+	};
 
 	@Override
 	protected void onDestroy() {

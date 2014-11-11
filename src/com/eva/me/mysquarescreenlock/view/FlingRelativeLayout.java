@@ -79,7 +79,7 @@ public class FlingRelativeLayout extends RelativeLayout{
 	private void initDragBitmap() {	
 		if (dragView == null) {
 			dragView = BitmapFactory.decodeResource(mContext.getResources(),
-					com.eva.me.mysquarescreenlock.R.drawable.ring);
+					com.eva.me.mysquarescreenlock.R.drawable.ring4);
 		}
 	}
 
