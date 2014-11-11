@@ -1,5 +1,6 @@
 package com.eva.me.mysquarescreenlock;
 
+import com.eva.me.mysquarescreenlock.listener.OnFlingCompleteListener;
 import com.eva.me.mysquarescreenlock.unlock.util.PasswordUtil;
 import com.eva.me.mysquarescreenlock.view.FlingRelativeLayout;
 
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class PsdValidateActivity extends Activity {
@@ -21,6 +23,7 @@ public class PsdValidateActivity extends Activity {
 	private final String TAG = "PsdValidateActivity";
 	private Button btnConfirm, btnClear;
 	private FlingRelativeLayout flingRelativeLayout;
+	private TextView tvPsdReveal;
 	private Context context;
 	private Intent iComeIn = null;
 	private String order = "";
@@ -45,6 +48,22 @@ public class PsdValidateActivity extends Activity {
 		btnClear = (Button) findViewById(R.id.btnClear);
 		btnConfirm = (Button) findViewById(R.id.btnConfirm);
 		flingRelativeLayout = (FlingRelativeLayout) findViewById(R.id.flingRelativeLayout);
+		tvPsdReveal = (TextView) findViewById(R.id.tvPsdReveal);
+		tvPsdReveal.setText("");
+		
+		showToast("请输入您的密码进行身份验证~", context);
+		
+		//通过listener进行实时的系统界面更新
+		flingRelativeLayout.setOnFlingCompleteListener(new OnFlingCompleteListener() {
+			
+			@Override
+			public void onFlingComplete(int curDirection) {
+				//每次手势结束时候触发
+				if (!PasswordUtil.curPsd.equals("")) {
+					tvPsdReveal.setText(""+PasswordUtil.curPsd);
+				}
+			}
+		});
 		
 		btnClear.setOnClickListener(new OnClickListener() {
 			

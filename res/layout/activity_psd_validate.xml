@@ -6,6 +6,21 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="10dp" >
+    
+    <TextView
+        android:id="@+id/tvTopInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请输入您的解锁手势，进行密码验证" />
+
+    <TextView
+        android:id="@+id/tvPsdReveal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_orange_light"
+        android:layout_gravity="center"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <com.eva.me.mysquarescreenlock.view.FlingRelativeLayout
         android:id="@+id/flingRelativeLayout"
