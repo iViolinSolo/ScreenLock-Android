@@ -49,8 +49,8 @@ public class SetPsdActivity extends Activity {
 
 	private void handleNoPsd() {
 		//display or not display
-		btnModify.setVisibility(View.INVISIBLE);
-		btnDelete.setVisibility(View.INVISIBLE);
+		btnModify.setVisibility(View.GONE);//更改为GONE 居中而不是invisible
+		btnDelete.setVisibility(View.GONE);
 		btnOpen.setVisibility(View.VISIBLE);
 		
 		btnOpen.setOnClickListener(new OnClickListener() {
@@ -69,7 +69,7 @@ public class SetPsdActivity extends Activity {
 		//display or not display
 		btnModify.setVisibility(View.VISIBLE);
 		btnDelete.setVisibility(View.VISIBLE);
-		btnOpen.setVisibility(View.INVISIBLE);
+		btnOpen.setVisibility(View.GONE);
 		
 		//set button click listener
 		//不论按那个，全部都是进入验证界面，但是只不过传入的参数不同
