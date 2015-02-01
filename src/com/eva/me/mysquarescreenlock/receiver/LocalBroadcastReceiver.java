@@ -19,6 +19,20 @@ public class LocalBroadcastReceiver extends BroadcastReceiver{
 		
 		if (mAction.equals(Intent.ACTION_SCREEN_ON)) {
 			//when screen turn from OFF/* to ON
+//			if ( !ScreenLockActivity.isShown) {
+//				ScreenLockActivity.isShown = true;
+//				Intent jmpSLA = new Intent();
+//				jmpSLA.setClass(context, ScreenLockActivity.class);
+//				jmpSLA.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//				context.startActivity(jmpSLA);
+//			}
+		} else if (mAction.equals(Intent.ACTION_SCREEN_OFF)) {
+			//when screen turn from ON/* to OFF
+//			if (ScreenLockActivity.isShown) {
+//				ScreenLockActivity.isShown = false;
+//				((Activity) ScreenLockActivity .getInstance()).finish();
+//			}
+
 			if ( !ScreenLockActivity.isShown) {
 				ScreenLockActivity.isShown = true;
 				Intent jmpSLA = new Intent();
@@ -26,12 +40,7 @@ public class LocalBroadcastReceiver extends BroadcastReceiver{
 				jmpSLA.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				context.startActivity(jmpSLA);
 			}
-		} else if (mAction.equals(Intent.ACTION_SCREEN_OFF)) {
-			//when screen turn from ON/* to OFF
-			if (ScreenLockActivity.isShown) {
-				ScreenLockActivity.isShown = false;
-				((Activity) ScreenLockActivity .getInstance()).finish();
-			}
+			
 		}
 	}
 
