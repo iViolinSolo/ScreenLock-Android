@@ -3,6 +3,14 @@ ScreenLock-Android
 
 另外一种奇特的解锁方式的锁屏软件
 
+#Alpha 4.0.0
+    增加了锁屏界面启动的优化，启动速度更快
+    增加了按键监听，禁止掉了其他不好的按键，比如home键
+    任然存在问题，就是有时候可能会出现toast显示时机不对，貌似是因为lock掉了
+    home按键屏蔽问题，解决方法，仿照LockLayer类的写法，添加了一个权限
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    同时添加类LockLayer，最后添加lockLayer的逻辑代码lock() unlock()
+
 #Alpha 3.0.0
     实现了几乎所有的功能，更改了UI和一些逻辑，增加了交互效果
 
