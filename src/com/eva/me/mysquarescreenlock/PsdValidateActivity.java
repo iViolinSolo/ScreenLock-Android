@@ -87,29 +87,44 @@ public class PsdValidateActivity extends Activity {
 					PasswordUtil.curPsd = "";//清空当前是输入的密码
 					tvPsdReveal.setText("");
 					//下面处理密码正确逻辑
-					switch (order) {
-					case "modify":
+//					switch (order) {
+//					case "modify":
+//						//跳转到一个新的界面
+//						Intent iJmpPRA = new Intent(context, PsdResetActivity.class);
+//						startActivity(iJmpPRA);
+//						finish();
+//						Log.e(TAG, "modify");
+//						break;
+//						
+//					case "delete":
+//						//删除密码即可，记得要退出
+//						PasswordUtil.clearPsd(context);
+//						finish();
+//						Log.e(TAG, "delete");
+//						break;
+//						
+//					case "NoSuchOrder":
+//						Log.wtf(TAG, "NoSuchOrder....");
+//						break;
+//						
+//					default:
+//						break;
+//					}
+					if(order.equals("modify")) {
 						//跳转到一个新的界面
 						Intent iJmpPRA = new Intent(context, PsdResetActivity.class);
 						startActivity(iJmpPRA);
 						finish();
 						Log.e(TAG, "modify");
-						break;
-						
-					case "delete":
+					}else if(order.equals("delete")) {
 						//删除密码即可，记得要退出
 						PasswordUtil.clearPsd(context);
 						finish();
 						Log.e(TAG, "delete");
-						break;
-						
-					case "NoSuchOrder":
+					}else if(order.equals("NoSuchOrder")) {
 						Log.wtf(TAG, "NoSuchOrder....");
-						break;
-						
-					default:
-						break;
 					}
+						
 					
 				} else {
 					//密码错误
