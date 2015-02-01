@@ -1,6 +1,7 @@
 package com.eva.me.mysquarescreenlock;
 
 import com.eva.me.mysquarescreenlock.listener.OnFlingCompleteListener;
+import com.eva.me.mysquarescreenlock.lockutil.LockLayer;
 import com.eva.me.mysquarescreenlock.unlock.util.PasswordUtil;
 import com.eva.me.mysquarescreenlock.view.FlingRelativeLayout;
 
@@ -22,6 +23,9 @@ public class ScreenLockActivity extends Activity {
 	public static boolean isShown = false;
 	private static Context instance = null;
 	
+	private LockLayer lockLayer;
+	private View lockView;
+	
 	private final int NEED_DELAY = 1;
 	private long delay = 100l;
 	
@@ -38,22 +42,33 @@ public class ScreenLockActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		isShown = true;
 		instance = ScreenLockActivity.this;
-		setContentView(R.layout.activity_screen_lock);
+
+//		setContentView(R.layout.activity_screen_lock);
 		init();
 	}
 	
 	private void init() {
 		Log.e(TAG, "ScreenLockActivity-> onCreate -> init");
+
+		//init layout view
+		lockView = View.inflate(this, R.layout.activity_screen_lock, null);
+		
+		//init lock layer
+		lockLayer = LockLayer.getInstance(this);
+		lockLayer.setLockView(lockView);
+		lockLayer.lock();
 		
 		//Init Views
-		flingRelativeLayout = (FlingRelativeLayout) findViewById(R.id.flingRelativeLayout);
-		btnConfirm = (Button) findViewById(R.id.btnConfirm);
-		btnClear = (Button) findViewById(R.id.btnClear);
-		tvTopInfo = (TextView) findViewById(R.id.tvTopInfo);
-		tvPsdReveal = (TextView) findViewById(R.id.tvPsdReveal);
+		flingRelativeLayout = (FlingRelativeLayout) lockView.findViewById(R.id.flingRelativeLayout);
+		btnConfirm = (Button) lockView.findViewById(R.id.btnConfirm);
+		btnClear = (Button) lockView.findViewById(R.id.btnClear);
+		tvTopInfo = (TextView) lockView.findViewById(R.id.tvTopInfo);
+		tvPsdReveal = (TextView) lockView.findViewById(R.id.tvPsdReveal);
 		
 		tvPsdReveal.setText("");
-
+		
+		
+		
 		if (PasswordUtil.hasPsd(instance)) {
 			//有密码的时候
 			btnConfirm.setVisibility(View.VISIBLE);
@@ -80,6 +95,8 @@ public class ScreenLockActivity extends Activity {
 						showToast("密码输入正确，欢迎回来~", instance);
 						PasswordUtil.curPsd="";//每次都是自动帮你去清空整个密码
 						tvPsdReveal.setText("");
+						
+						lockLayer.unlock();
 						finish();
 					} else {
 						//密码错误
@@ -142,6 +159,8 @@ public class ScreenLockActivity extends Activity {
 		
 		@Override
 		public void run() {
+			lockLayer.unlock();
+			
 			ScreenLockActivity.this.finish();
 			showToast("解锁成功~", ScreenLockActivity.this);
 		}
